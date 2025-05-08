@@ -7,22 +7,27 @@
 @import "syntax";
 @import "starsnonscss";
 
+/* Set Segoe UI font for all elements */
+* {
+    font-family: "Segoe UI", "Segoe UI Web (West European)", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+}
+
 /* Set black background and Segoe UI font for the entire website */
 body {
     background-color: #ffffff;
-    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+    /* Remove the font-family declaration here since it's now handled by the universal selector */
     color: #000000;
 }
 
 /* Navigation styling */
 .navbar {
-    background-color: #000000 !important;
+    background-color: #031C1B !important;
 }
 
 .navbar .nav-link {
-    color: #ffffff !important;
+    color: #ffffff  !important;
 }
 
 .navbar .nav-link:hover {
-    color: rgba(255, 255, 255, 0.8) !important;
+    color: #ffffff !important;
 }

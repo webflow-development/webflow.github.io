@@ -49,7 +49,8 @@ ga('send', 'pageview');
 
     <!-- Begin Logo -->
     <a class="navbar-brand" href="{{ site.baseurl }}/">
-    <img src="{{ site.baseurl }}/{{ site.logo }}" alt="{{ site.name }}">
+        <img src="{{ site.baseurl }}/{{ site.logo }}" alt="{{ site.name }}">
+        <span style="color: #ffffff; margin-left: 10px; font-size: 0.8rem; font-weight: bold;">Webflow</span>
     </a>
     <!-- End Logo -->
 
@@ -110,12 +111,12 @@ ga('send', 'pageview');
 
 <!-- Site Title
 ================================================== -->
-<div class="mainheading">
+<!-- <div class="mainheading">
     <h1 class="sitetitle">{{ site.name }}</h1>
     <p class="lead">
         {{ site.description }}
     </p>
-</div>
+</div> -->
 
 <!-- Content
 ================================================== -->
@@ -127,19 +128,19 @@ ga('send', 'pageview');
 <!-- Bottom Alert Bar
 ================================================== -->
 <!-- <div class="alertbar">
-	<div class="container text-center">
-		<span><img src="{{ site.baseurl }}/{{ site.logo }}" alt="{{site.title}}"> &nbsp; Never miss a <b>story</b> from us, subscribe to our newsletter</span>
+    <div class="container text-center">
+        <span><img src="{{ site.baseurl }}/{{ site.logo }}" alt="{{site.title}}"> &nbsp; Never miss a <b>story</b> from us, subscribe to our newsletter</span>
         <form action="{{site.mailchimp-list}}" method="post" name="mc-embedded-subscribe-form" class="wj-contact-form validate" target="_blank" novalidate>
             <div class="mc-field-group">
             <input type="email" placeholder="Email" name="EMAIL" class="required email" id="mce-EMAIL" autocomplete="on" required>
             <input type="submit" value="Subscribe" name="subscribe" class="heart">
             </div>
         </form>
-	</div>
-</div>
+    </div>
+</div> -->
 {% endif %}
     
-</div> -->
+</div>
 
 <!-- Categories Jumbotron
 ================================================== -->

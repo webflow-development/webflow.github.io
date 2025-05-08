@@ -2,18 +2,21 @@
 layout: page
 title: About Me
 permalink: /about
-comments: true
+comments: false
 ---
 
-## Welcome to my blog! 👋😃
+## Welcome 
+<div style="display: flex; align-items: center; gap: 20px; margin-bottom: 20px;">
+    <img src="{{ site.baseurl }}/assets/images/paulo-avatar.png" alt="Paulo Thüler" style="width: 100px; height: 100px; border-radius: 50%;">
 
 My name is Paulo Thüler, and I am an IT professional with a deep interest in cloud technologies, automation, and DevOps practices. My focus is on integrating Microsoft Azure, Microsoft 365 services, and CI/CD pipelines to optimize and streamline modern development workflows.
+</div>
 
-### About This Blog
+### About this blog
 
-In this space, I share my experiences, tips, and solutions based on my work with cloud infrastructure and automation. Whether it's deploying apps on Azure, automating processes with GitLab CI/CD, or leveraging Microsoft 365 for seamless team collaboration, I aim to provide insights that can help others in the IT and development community.
+In this space, I share my experiences, tips, and solutions based on my work with cloud infrastructure and automation. Whether it's deploying apps on Azure, automating processes with CI/CD, or leveraging Microsoft 365 for seamless team collaboration, I aim to provide insights that can help others in the IT and development community.
 
-## Specializations
+### Specializations
 
 I specialize in the following areas:
 
