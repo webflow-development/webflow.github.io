@@ -1,23 +1,52 @@
-# Mediumish - Jekyll Theme
+# Webflow Blog
 
-[Live Demo](https://wowthemesnet.github.io/mediumish-theme-jekyll/) &nbsp; | &nbsp; [Download](https://github.com/wowthemesnet/mediumish-theme-jekyll/archive/master.zip) &nbsp; | &nbsp; [Documentation](https://bootstrapstarter.com/template-mediumish-bootstrap-jekyll/) &nbsp; | &nbsp; [Buy me a coffee](https://www.wowthemes.net/donate/)
+A personal blog focused on cloud technologies, automation, and DevOps practices, with emphasis on Microsoft Azure and Microsoft 365 services.
 
-![mediumish](assets/images/mediumish-jekyll-template.png)
+## About
 
+This blog is maintained by Paulo Thüler, an IT professional specializing in:
 
-### Copyright
+- Microsoft Azure cloud platform management and infrastructure deployment
+- Microsoft 365 services integration and management
+- CI/CD pipeline automation
+- DevOps practices and cloud automation
+- Infrastructure as Code (especially Azure Bicep)
 
-Copyright (C) 2019 Sal, https://www.wowthemes.net
+## Features
 
-**Mediumish for Jekyll** is designed and developed by [Sal](https://www.wowthemes.net) and it is *free* under MIT license. 
+- Clean, responsive design optimized for reading
+- Categories and tags for easy content navigation
+- Search functionality powered by Lunr.js
+- SEO optimized
+- Rating system for articles
+- Lazy loading images for better performance
+- Mobile-friendly layout
 
-<a href="https://www.wowthemes.net/donate/" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
+## Technical Details
 
-### Contribute
+Built with:
+- Jekyll static site generator
+- Bootstrap 4 for responsive design
+- Font Awesome icons
+- Custom CSS with Segoe UI font styling
+- Search functionality using Lunr.js
 
-1. [Fork the repo](https://github.com/wowthemesnet/mediumish-theme-jekyll).
-2. Clone a copy of your fork on your local
-3. Create a branch off of master and give it a meaningful name (e.g. my-new-mediumish-feature).
-4. Make necessary changes, commit, push and open a pull request on GitHub.
+## Local Development
 
-Thank you!
+1. Install Jekyll and Ruby dependencies:
+```bash
+bundle install
+```
+
+2. Run the site using the provided script:
+```bash
+./scripts/run.sh
+```
+This script handles starting the Jekyll server with the proper configuration.
+
+3. View the site at `http://localhost:4000`
+
+Note: Make sure the run script has execute permissions:
+```bash
+chmod +x ./scripts/run.sh
+```
