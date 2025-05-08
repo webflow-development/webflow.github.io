@@ -2,7 +2,7 @@
 layout: post
 title:  "PowerShell"
 author: "Paulo Thüler"
-categories: [ PowerShell, Description ]
+categories: [ PowerShell ]
 tags: [powershell]
 image: assets/images/powershell.jpg
 description: "An introduction to PowerShell - Microsoft's powerful automation and scripting language for Windows, macOS and Linux."
