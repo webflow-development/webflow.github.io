@@ -11,8 +11,8 @@ comments: false
     <div>
         My name is Paulo Thüler, and I am an IT professional with a deep interest in cloud technologies, automation, and DevOps practices. My focus is on integrating Microsoft Azure, Microsoft 365 services, and CI/CD pipelines to optimize and streamline modern development workflows.
         <div style="margin-top: 10px;">
-            <a target="_blank" href="https://www.linkedin.com/in/paulothuler" onclick="window.open(this.href, 'width=550,height=435');return false;">
-                <i class="fab fa-linkedin-in"></i> Connect with me on LinkedIn
+            <a target="_blank" href="https://www.linkedin.com/in/paulo-th%C3%BCler-686441109/" onclick="window.open(this.href, 'width=550,height=435');return false;">
+                <i class="fab fa-linkedin-in"></i>
             </a>
         </div>
     </div>
