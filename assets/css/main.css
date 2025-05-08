@@ -1,0 +1,28 @@
+/* We need to add display:inline in order to align the '>>' of the 'read more' link */
+.post-excerpt p {
+    display:inline;
+}
+
+/* Import partials from `sass_dir` (defaults to `_sass`) */
+@import "syntax";
+@import "starsnonscss";
+
+/* Set black background and Segoe UI font for the entire website */
+body {
+    background-color: #ffffff;
+    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+    color: #000000;
+}
+
+/* Navigation styling */
+.navbar {
+    background-color: #000000 !important;
+}
+
+.navbar .nav-link {
+    color: #ffffff !important;
+}
+
+.navbar .nav-link:hover {
+    color: rgba(255, 255, 255, 0.8) !important;
+}

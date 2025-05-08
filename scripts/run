@@ -1,0 +1,7 @@
+#!/bin/bash
+
+echo "Running Jekyll cleanup..."
+bundle exec jekyll clean
+
+echo "Building Jekyll site..."
+bundle exec jekyll serve --trace --verbose
