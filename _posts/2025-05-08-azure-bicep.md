@@ -3,7 +3,7 @@ layout: post
 title: "Azure Bicep - Infrastructure as Code"
 author: "Paulo Thüler"
 categories: [ Microsoft Azure, Infrastructure as Code, Cloud ]
-tags: [Azure, Bicep]
+tags: [Azure, Bicep, IaC]
 image: assets/images/bicep.png
 description: "Learn about Azure Bicep, a domain-specific language (DSL) for deploying Azure resources declaratively."
 featured: true
