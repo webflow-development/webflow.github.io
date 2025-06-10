@@ -131,7 +131,7 @@ section.recent-posts {
 
 .listfeaturedtag .wrapthumbnail {
     height: 100%;
-    flex: 0 0 200px;  /* Reduzierte fixe Höhe */
+    /* flex: 0 0 350px;  Increased from 200px to 350px for a larger thumbnail */
 }
 
 .wrapthumbnail-small {
@@ -148,7 +148,7 @@ section.recent-posts {
 }
 
 .maxthumb {
-    max-height: 100px;
+    /* max-height: 250px; Increased from 100px to 250px for a larger thumbnail */
     overflow: hidden;
 }
 
@@ -196,7 +196,7 @@ section.recent-posts {
     object-fit: contain;
     width: 100%;
     height: auto;
-    max-height: 200px;
+    max-height: 100px; /* Increased from 200px to 400px */
 }
 
 @media (max-width:991px) {

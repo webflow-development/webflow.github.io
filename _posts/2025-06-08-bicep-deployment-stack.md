@@ -5,7 +5,7 @@ author: "Paulo Thüler"
 categories: [ Azure ]
 tags: [ Azure, Bicep, Gitlab, CI/CD, IaC ]
 image: assets/images/bicep-deployment-stack-overview.png
-description: "A scalable Bicep Deployment Stack to deploy your resources with bicep, deployment stacks and gitlab pipelines"
+description: "A scalable Bicep Deployment Stack to deploy your resources with Bicep, deployment stacks, and GitLab pipelines."
 featured: true
 hidden: false
 ---
@@ -19,16 +19,17 @@ hidden: false
     - [4. Stack Repository](#4-stack-repository)
     - [5. Inheritable Pipeline Definition](#5-inheritable-pipeline-definition)
     - [6. Stack Versioning](#6-stack-versioning)
-  - [Steps](#steps)
-- [Example Usage](#example-usage)
-- [Architecture](#architecture)
+- [How To](#how-to)
   - [Dockerfile](#dockerfile)
+  - [Scripts](#scripts)
+  - [Bicep Deployment Stack](#bicep-deployment-stack)
+    - [Pipeline definitions](#pipeline-definitions)
 - [Bicep Deployment](#bicep-deployment)
 - [Related Links](#related-links)
 
 # Overview
 
-This guide describes a scalable Bicep Deployment Stack designed for efficient infrastructure deployment using Bicep, Azrue Deployment Stacks, and GitLab pipelines. The solution is modular and reusable, following best practices for Infrastructure as Code (IaC).
+This guide describes a scalable Bicep Deployment Stack designed for efficient infrastructure deployment using Bicep, Azure Deployment Stacks, and GitLab pipelines. The solution is modular and reusable, following best practices for Infrastructure as Code (IaC).
 
 ![Bicep Deployment Stack Overview](/assets/images/bicep-deployment-stack-overview.png)
 
@@ -47,66 +48,49 @@ Before you begin, ensure you have the following:
 The stack consists of the following components:
 
 ### 1. Azure Subscription
-- You need one or more Azure Subscription (e.b Dev, Test, Prod). 
+- You need one or more Azure subscriptions (e.g., Dev, Test, Prod).
 
-###  2. GitLab Runner 
-- You have to add contributor permission to your GitLab runner or multiple runners for each environment. In my case a use one App Registration for one Subscripton. In a large scale I recommend to yous a Kubernets Cluster with Managed Identities for each subscripton.
+### 2. GitLab Runner
+- You have to add contributor permissions to your GitLab runner, or use multiple runners for each environment. In my case, I use one App Registration for one Subscription. At large scale, I recommend using a Kubernetes Cluster with Managed Identities for each Subscription.
 
 ### 3. Docker Image with Tooling
-- Contains all required tools: Bicep CLI, Azure CLI, PowerShell, and supporting scripts
-- Ensures consistent build and deployment environments across projects
-- Located in the `bicep-base-image` directory
+- Contains all required tools: Bicep CLI, Azure CLI, PowerShell, and supporting scripts.
+- Ensures consistent build and deployment environments across projects.
+- Located in the `bicep-base-image` directory.
 
 ### 4. Stack Repository
-- Central repository for pipeline definitions and stack versioning
-- Houses the `bice.gitlab-ci.yml` file, which defines the CI/CD pipeline
-- Enables version control and traceability for stack changes
+- Central repository for pipeline definitions and stack versioning.
+- Houses the `bice.gitlab-ci.yml` file, which defines the CI/CD pipeline.
+- Enables version control and traceability for stack changes.
 
 ### 5. Inheritable Pipeline Definition
-- The `bice.gitlab-ci.yml` pipeline is designed to be inherited by multiple projects
-- Example: The `bicep-virtualmachine-deployment` project can reuse the same pipeline definition for consistent deployments
-- Promotes DRY (Don't Repeat Yourself) principles and simplifies maintenance
+- The `bice.gitlab-ci.yml` pipeline is designed to be inherited by multiple projects.
+- Example: The `bicep-virtualmachine-deployment` project can reuse the same pipeline definition for consistent deployments.
+- Promotes DRY (Don't Repeat Yourself) principles and simplifies maintenance.
 
 ### 6. Stack Versioning
-- Each deployment stack is versioned, allowing for controlled rollouts and easy rollbacks
-- Versioning is managed within the stack repository
+- Each deployment stack is versioned, allowing controlled rollouts and easy rollbacks.
+- Versioning is managed within the stack repository.
 
-## Steps
+# How To
 
-1. Create an Azure Subscriptiont
-2. Create a App Registration with a Client Secret. Add a Role Assignment with `Contributor` to your Subscription
-3. Add the following the GitLab variable on your `bicep-deployment-stack`:
+1. Create an Azure Subscription.
+2. Create an App Registration with a Client Secret. Add a Role Assignment with `Contributor` to your Subscription.
+3. Add the following GitLab variables to your `bicep-deployment-stack`:
     - AZURE_TENANT_ID
     - AZURE_SUBSCRIPTION_ID
     - AZURE_APPLICATION_ID
     - AZURE_CLIENT_SECRET (Masked)
+4. Create three new repositories on GitLab:
+   1. Repository for the base image with the Dockerfile.
+   2. Repository for the deployment stack.
+   3. Repository for the effective deployment of your infrastructure on Azure.
+   4. (Optional): You can create more repositories to deploy different infrastructure use cases.
 
-# Example Usage
-
-To use the Bicep Deployment Stack in a new project:
-
-1. Reference the `bice.gitlab-ci.yml` in your project's `.gitlab-ci.yml`:
-   ```yaml
-   include:
-     - project: 'your-group/bicep-deployment-stack'
-       file: '/bice.gitlab-ci.yml'
-   ```
-2. Place your Bicep files and parameters in your project repository (e.g., `bicep-virtualmachine-deployment`)
-3. Push your changes to GitLab to trigger the pipeline
-
-# Architecture
-
-```mermaid
-flowchart TD
-    A(["Bicep Base Image"]) -.-> B(["Bicep Deployment Stack"])
-    B --> C(["Deployment 1"])
-    B --> D(["Deployment 2"])
-    B --> E(["Deployment N"])
-```
 
 ## Dockerfile
 
-This is an example how the base image for your bicep deployment stack could look like. It can also used for the vscode devcontainer.
+This is an example of how the base image for your Bicep deployment stack could look. It can also be used for the VS Code devcontainer.
 
 ```dockerfile
 FROM mcr.microsoft.com/azure-powershell:14.0.0-ubuntu-22.04
@@ -127,7 +111,7 @@ RUN curl -Lo bicep "https://github.com/Azure/bicep/releases/download/v${BICEP_VE
     mv ./bicep /usr/local/bin/bicep && \
     apt-get update
 
-# Install specific powershell modules
+# Install specific PowerShell modules
 # RUN pwsh -Command "Set-PSRepository -Name PSGallery -InstallationPolicy Trusted; \
 #     Install-Module -Name Az.Resources -RequiredVersion '${AZ_RESOURCES_VERSION}' \
 #     -Scope AllUsers -Verbose -Force"
@@ -137,9 +121,18 @@ COPY scripts/ /usr/local/bin
 # It is not recommended to use the root user
 USER root 
 
+```
+## Scripts
+
+- [Lint-Bicep.ps1](https://github.com/webflow-development/webflow.github.io/blob/main/assets/scripts/Lint-Bicep.ps1){:target="_blank"} – Lints Bicep files for syntax and best practices.
+- [Build-Bicep.ps1](https://github.com/webflow-development/webflow.github.io/blob/main/assets/scripts/Build-Bicep.ps1){:target="_blank"} – Builds Bicep files into ARM templates.
+- [Deploy-Bicep.ps1](https://github.com/webflow-development/webflow.github.io/blob/main/assets/scripts/Deploy-Bicep.ps1){:target="_blank"} – Deploys ARM templates to Azure.
+- [Connect-Azure.ps1](https://github.com/webflow-development/webflow.github.io/blob/main/assets/scripts/Connect-Azure.ps1){:target="_blank"} – Authenticates and connects to Azure using a service principal.
+
+Each script is designed to be used within the CI/CD pipeline or locally for development and testing.
+
 ## Bicep Deployment Stack 
 ### Pipeline definitions
-
 
 ```yaml
 # .gitlab-ci.yml
@@ -233,7 +226,7 @@ deploy:
     - pwsh -Command "Connect-Azure.ps1 -TenantId ${AZURE_TENANT_ID} -SubscriptionId ${AZURE_SUBSCRIPTION_ID} -ApplicationId ${AZURE_APPLICATION_ID} -ClientSecret (ConvertTo-SecureString ${AZURE_CLIENT_SECRET} -AsPlainText -Force) -UseServicePrincipal"
   script:
     - echo "Deploying to production environment..."
-    - pwsh -Command "Deploy-Bicep.ps1 -DeploymentName 'bicep-deplyoment-stack' -TemplateFile './artifacts/main.json' -TemplateParameterFile './artifacts/main-${STAGE}-${LOCATION}.parameters.json' -Location '${LOCATION}'
+    - pwsh -Command "Deploy-Bicep.ps1 -DeploymentName 'bicep-deployment-stack' -TemplateFile './artifacts/main.json' -TemplateParameterFile './artifacts/main-${STAGE}-${LOCATION}.parameters.json' -Location '${LOCATION}'"
   needs:
     - deploy-test
     - build-bicep
@@ -253,7 +246,7 @@ include:
     ref: '1.0.41'
 ```
 
-Here is the file structure needed for the Bicep deployment stack.
+Here is the required file structure for the Bicep deployment stack.
 
 ```tree
 │   .gitignore
