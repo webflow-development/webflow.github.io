@@ -1,6 +1,6 @@
 # Site
-name: "Webflow"
-title: "Webflow"
+name: "Webflow - Tech blog"
+title: "Webflow - Tech blog"
 description: "I'm [Your Name], an IT professional focused on Microsoft Azure, Microsoft 365 SaaS services, and GitLab CI/CD. I share insights on cloud infrastructure, DevOps practices, and automation to help you optimize your development and deployment workflows."
 logo: 'assets/images/logo.png'
 favicon: 'assets/images/logo.png'
@@ -21,7 +21,7 @@ authors:
     email: info@webflow.ch
     web: https://www.webflow.ch
     linkedin: https://www.linkedin.com/in/paulo-th%C3%BCler-686441109
-    description: "Author of Mediumish, a Bootstrap Medium styled template available for WordPress, HTML, Ghost and Jekyll. You are currently previewing Jekyll template demo."
+    description: "Author Paulo Thüler shares expertise on Microsoft Azure, Microsoft 365 SaaS, and DevOps automation. Explore practical guides, cloud infrastructure insights, and workflow optimization tips to empower IT professionals and developers." 
   # john:
   #   name: John
   #   display_name: John    

@@ -3,10 +3,12 @@ Template Name: Mediumish
 Copyright: Sal, WowThemes.net, https://www.wowthemes.net 
 License: https://www.wowthemes.net/freebies-license/ 
 */
-@media screen and (min-width:1500px) {
+
+@media screen and (min-width:1000px) {
     html { font-size:18px; } /* Increase the font size on higher resolutions */
-    .container {max-width:75%;}
+    /* .container {max-width:75%;}  */
 }
+
 .mainheading {
     padding: 1rem 0rem;
 }
@@ -25,7 +27,7 @@ pre {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     border: #E3EDF3 1px solid;
-    width: 100%;
+    /* width: 100%; */
     padding: 7px;
     font-family: monospace, sans-serif;
     font-size: .9rem;
@@ -42,10 +44,17 @@ pre {
     background: rgba(255, 255, 255, .97);
     box-shadow: 0 2px 2px -2px rgba(0, 0, 0, .15);
     transition: top 0.2s ease-in-out;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 8px;
 }
 
 .main-content {
     min-height: 300px;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .site-content {
@@ -53,6 +62,15 @@ pre {
     padding-top: 1.5rem;
     margin-top: 57px;
     transition: all 0.4s;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+article.post {
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 section {
@@ -113,14 +131,14 @@ section.recent-posts {
 
 .listfeaturedtag .wrapthumbnail {
     height: 100%;
-    flex: 0 0 120px;  /* Reduzierte fixe Höhe */
+    flex: 0 0 200px;  /* Reduzierte fixe Höhe */
 }
 
 .wrapthumbnail-small {
     display: flex;
     align-items: center;
     justify-content: center;
-    max-height: 120px;  /* Reduzierte Höhe */
+    max-height: 200px;  /* Reduzierte Höhe */
     overflow: hidden;
 }
 
@@ -150,7 +168,7 @@ section.recent-posts {
 }
 
 .listfeaturedtag .card-block {
-    padding-left: 0;
+    padding: 0.5rem;  /* Weniger Padding */
 }
 
 .listfeaturedtag h2.card-title,
@@ -328,6 +346,7 @@ span.post-read-more a:hover {
 }
 
 .mainheading h1.posttitle {
+    font-size: 1.2rem;
     font-weight: 700;
     margin-bottom: 1rem;
 }
@@ -350,9 +369,13 @@ span.post-read-more a:hover {
 
 .article-post {
     font-family: Merriweather;
-    font-size: 1.1rem;
+    font-size: 0.8rem;
     line-height: 1.84;
     color: rgba(0, 0, 0, .8);
+    max-width: 1000px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 blockquote {
@@ -721,6 +744,31 @@ h6 {
 .article-post h6 {
     font-weight: 700;
     margin-bottom: 1.5rem;
+}
+
+.article-post h1,
+.article-post .h1,
+.article-post h2,
+.article-post .h2,
+.article-post h3,
+.article-post .h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 0.3rem;
+}
+
+.article-post h4,
+.article-post .h4,
+.article-post h5,
+.article-post .h5,
+.article-post h6,
+.article-post .h6 {
+    font-size: 0.8rem;
+    color: rgba(0, 0, 0, .44);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 0.3rem;
 }
 
 .article-post img.shadow {
