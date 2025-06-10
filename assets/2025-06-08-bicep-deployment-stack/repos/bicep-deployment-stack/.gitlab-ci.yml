@@ -1,0 +1,23 @@
+workflow:
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_MERGE_REQUEST_IID
+    - if: $CI_COMMIT_TAG
+
+stages:
+  - Publish
+
+variables:
+  VERSION: "1.0.${CI_PIPELINE_IID}"
+
+gitlab:release:
+  stage: Publish
+  image: registry.gitlab.com/gitlab-org/release-cli
+  script: 
+    - echo "Create release"
+  release:
+    name: 'bicep-deployment-stack'
+    description: 'Release for Bicep deployment stack'
+    tag_name: $VERSION
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH

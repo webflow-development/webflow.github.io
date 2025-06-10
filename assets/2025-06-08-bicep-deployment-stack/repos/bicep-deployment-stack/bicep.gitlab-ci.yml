@@ -1,0 +1,69 @@
+image: webflowch/bicep-deployment-image:1.2
+
+workflow:
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_MERGE_REQUEST_IID
+    - if: $CI_COMMIT_TAG
+
+stages:
+  - build
+  - test
+  - deploy
+
+variables:
+  LOCATION: 'westeurope'
+  STAGE: 'prod'
+
+bicep-lint:
+  stage: build
+  script:
+    - echo "Linting Bicep files..."
+    - pwsh -Command "Lint-Bicep.ps1 -Path './src' -Recurse"
+  rules:
+    - if: $CI_COMMIT_BRANCH
+      when: always
+    - if: $CI_MERGE_REQUEST_ID
+
+build-bicep:
+  stage: build
+  script:
+    - echo "Building Bicep files..."
+    - pwsh -Command "Build-Bicep.ps1 -File './src/main.bicep' -ParamFile './config/main-${STAGE}-${LOCATION}.bicepparam' -OutPath './artifacts'"
+  artifacts:
+    paths:
+      - ./artifacts
+    expire_in: 1 hour
+    when: on_success
+  rules:
+    - if: $CI_COMMIT_BRANCH
+      when: always
+    - if: $CI_MERGE_REQUEST_ID
+
+deploy-test:
+  stage: deploy
+  before_script:
+    - echo "Login to Azure..."
+    - pwsh -Command "Connect-Azure.ps1 -TenantId ${AZURE_TENANT_ID} -SubscriptionId ${AZURE_SUBSCRIPTION_ID} -ApplicationId ${AZURE_APPLICATION_ID} -ClientSecret (ConvertTo-SecureString ${AZURE_CLIENT_SECRET} -AsPlainText -Force) -UseServicePrincipal"
+  script:
+    - echo "Deploying to test environment..."
+    - pwsh -Command "Deploy-Bicep.ps1 -DeploymentName 'bicep-deployment-stack' -TemplateFile './artifacts/main.json' -TemplateParameterFile './artifacts/main-${STAGE}-${LOCATION}.parameters.json' -Location '${LOCATION}' -Test"
+  needs:
+    - bicep-lint
+    - build-bicep
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+deploy:
+  stage: deploy
+  before_script:
+    - echo "Login to Azure..."
+    - pwsh -Command "Connect-Azure.ps1 -TenantId ${AZURE_TENANT_ID} -SubscriptionId ${AZURE_SUBSCRIPTION_ID} -ApplicationId ${AZURE_APPLICATION_ID} -ClientSecret (ConvertTo-SecureString ${AZURE_CLIENT_SECRET} -AsPlainText -Force) -UseServicePrincipal"
+  script:
+    - echo "Deploying to production environment..."
+    - pwsh -Command "Deploy-Bicep.ps1 -DeploymentName 'bicep-deployment-stack' -TemplateFile './artifacts/main.json' -TemplateParameterFile './artifacts/main-${STAGE}-${LOCATION}.parameters.json' -Location '${LOCATION}'"
+  needs:
+    - deploy-test
+    - build-bicep
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH

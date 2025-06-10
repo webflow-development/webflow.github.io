@@ -1,0 +1,4 @@
+include: 
+  - project: 'webflow-development/bicep/bicep-deployment-stack'
+    file: 'bicep.gitlab-ci.yml'
+    ref: '1.0.47'
