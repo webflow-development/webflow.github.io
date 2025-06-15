@@ -1,0 +1,30 @@
+{
+    "name": "Jekyll Development Environment",
+    "dockerFile": "Dockerfile",
+    "features": {
+        "ghcr.io/devcontainers/features/git:1": {
+            "version": "latest"
+        }
+    },
+    "postCreateCommand": "git config --global user.email \"${GIT_USER_EMAIL:-paulo.thueler@webflow.ch}\" && git config --global user.name \"${GIT_USER_NAME:-Paulo Thüler}\" && bundle install",
+    "remoteEnv": {
+        "GIT_USER_EMAIL": "${localEnv:GIT_USER_EMAIL}",
+        "GIT_USER_NAME": "${localEnv:GIT_USER_NAME}"
+    },
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash"
+            },
+            "extensions": [
+                "eamodio.gitlens",
+                "foxundermoon.shell-format",
+                "GitLab.gitlab-workflow",
+                "redhat.vscode-yaml",
+                "vscode.git",
+                "yzhang.markdown-all-in-one"
+            ],
+            "git.path": "/usr/bin/git"
+        }
+    }
+}
