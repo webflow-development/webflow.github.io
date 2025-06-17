@@ -152,6 +152,12 @@ section.recent-posts {
     overflow: hidden;
 }
 
+.card .maxthumb {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .listfeaturedtag .card,
 .card-footer {
     border: 0;
@@ -912,7 +918,9 @@ iframe {
 }
 
 .card .img-fluid {
-    width: 100%;
+    width: 90%;
+    max-width: 200px;
+    height: auto;
 }
 
 .sticky-top-80 {

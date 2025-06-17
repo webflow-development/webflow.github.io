@@ -4,13 +4,19 @@ title:  "Bicep Deployment Stack"
 author: "Paulo Thüler"
 categories: [ Azure ]
 tags: [ Azure, Bicep, Gitlab, CI/CD, IaC ]
-image: assets/images/bicep-deployment-stack-overview.png
+image: assets/2025-06-08-bicep-deployment-stack/bicep-deployment-stack-avatar.png
 description: "A scalable Bicep Deployment Stack to deploy your resources with Bicep, deployment stacks, and GitLab pipelines."
 featured: true
 hidden: false
 ---
+
+# THIS IS A DRAFT
+
 ## Table of Contents
-- [Overview](#overview)
+- [THIS IS A DRAFT](#this-is-a-draft)
+  - [Table of Contents](#table-of-contents)
+- [Why stack?](#why-stack)
+- [Pipeline Overview](#pipeline-overview)
 - [Prerequisites](#prerequisites)
   - [Components](#components)
     - [1. Azure Subscription](#1-azure-subscription)
@@ -20,18 +26,27 @@ hidden: false
     - [5. Inheritable Pipeline Definition](#5-inheritable-pipeline-definition)
     - [6. Stack Versioning](#6-stack-versioning)
 - [How To](#how-to)
-  - [Dockerfile](#dockerfile)
-  - [Scripts](#scripts)
-  - [Bicep Deployment Stack](#bicep-deployment-stack)
-    - [Pipeline definitions](#pipeline-definitions)
 - [Bicep Deployment](#bicep-deployment)
 - [Related Links](#related-links)
 
-# Overview
+# Why stack?
 
 This guide describes a scalable Bicep Deployment Stack designed for efficient infrastructure deployment using Bicep, Azure Deployment Stacks, and GitLab pipelines. The solution is modular and reusable, following best practices for Infrastructure as Code (IaC).
 
-![Bicep Deployment Stack Overview](/assets/images/bicep-deployment-stack-overview.png)
+![Bicep Deployment Stack](/assets/2025-06-08-bicep-deployment-stack/bicep-deployment-stack.png)
+
+The image above illustrates a layered architecture for the Bicep Deployment Stack:
+
+- **Docker Layer:** The `bicep-base-image` provides the foundational Docker image for deployments.
+- **CI/CD Layer (GitLab):** The `bicep-deployment-stack` builds on the base image and orchestrates deployments, including multiple deployment modules.
+- **Azure Layer:** Individual deployment modules (e.g., `deployment 1`, `deployment 2`, etc.) are included by the stack and represent specific Azure deployment scenarios.
+- **Local Development Layer:** The local development environment uses Visual Studio Code and a `devcontainer`, leveraging the same image for consistency across environments.
+
+Arrows labeled **`image`** indicate Docker image relationships, while arrows labeled **`include`** show how deployment modules are integrated in the diagram above. This structure ensures modularity, reusability, and consistency from local development to cloud deployment.
+
+# Pipeline Overview
+
+![Bicep Deployment Stack Overview](/assets/2025-06-08-bicep-deployment-stack/bicep-deployment-stack-pipeline.png)
 
 # Prerequisites
 
@@ -86,154 +101,6 @@ The stack consists of the following components:
    2. Repository for the deployment stack.
    3. Repository for the effective deployment of your infrastructure on Azure.
    4. (Optional): You can create more repositories to deploy different infrastructure use cases.
-
-
-## Dockerfile
-
-This is an example of how the base image for your Bicep deployment stack could look. It can also be used for the VS Code devcontainer.
-
-```dockerfile
-FROM mcr.microsoft.com/azure-powershell:14.0.0-ubuntu-22.04
-
-RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get -y install curl && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-LABEL maintainer="services@webflow.ch"
-
-ARG BICEP_VERSION="0.35.1"
-# ARG AZ_RESOURCES_VERSION="7.7.0"
-
-RUN curl -Lo bicep "https://github.com/Azure/bicep/releases/download/v${BICEP_VERSION}/bicep-linux-x64" && \
-    chmod +x ./bicep  && \
-    mv ./bicep /usr/local/bin/bicep && \
-    apt-get update
-
-# Install specific PowerShell modules
-# RUN pwsh -Command "Set-PSRepository -Name PSGallery -InstallationPolicy Trusted; \
-#     Install-Module -Name Az.Resources -RequiredVersion '${AZ_RESOURCES_VERSION}' \
-#     -Scope AllUsers -Verbose -Force"
-
-COPY scripts/ /usr/local/bin
-
-# It is not recommended to use the root user
-USER root 
-
-```
-## Scripts
-
-- [Lint-Bicep.ps1](https://github.com/webflow-development/webflow.github.io/blob/main/assets/scripts/Lint-Bicep.ps1){:target="_blank"} – Lints Bicep files for syntax and best practices.
-- [Build-Bicep.ps1](https://github.com/webflow-development/webflow.github.io/blob/main/assets/scripts/Build-Bicep.ps1){:target="_blank"} – Builds Bicep files into ARM templates.
-- [Deploy-Bicep.ps1](https://github.com/webflow-development/webflow.github.io/blob/main/assets/scripts/Deploy-Bicep.ps1){:target="_blank"} – Deploys ARM templates to Azure.
-- [Connect-Azure.ps1](https://github.com/webflow-development/webflow.github.io/blob/main/assets/scripts/Connect-Azure.ps1){:target="_blank"} – Authenticates and connects to Azure using a service principal.
-
-Each script is designed to be used within the CI/CD pipeline or locally for development and testing.
-
-## Bicep Deployment Stack 
-### Pipeline definitions
-
-```yaml
-# .gitlab-ci.yml
-workflow:
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-    - if: $CI_MERGE_REQUEST_IID
-    - if: $CI_COMMIT_TAG
-
-stages:
-  - Publish
-
-variables:
-  VERSION: "1.0.${CI_PIPELINE_IID}"
-
-gitlab:release:
-  stage: Publish
-  image: registry.gitlab.com/gitlab-org/release-cli
-  script: 
-    - echo "Create release"
-  release:
-    name: 'bicep-deployment-stack'
-    description: 'Release for Bicep deployment stack'
-    tag_name: $VERSION
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-```
-
-```yaml
-# bicep.gitlab-ci.yml
-image: webflowch/bicep-deployment-image:1.2
-
-workflow:
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-    - if: $CI_MERGE_REQUEST_IID
-    - if: $CI_COMMIT_TAG
-
-stages:
-  - build
-  - test
-  - deploy
-
-variables:
-  LOCATION: 'westeurope'
-  STAGE: 'prod'
-
-bicep-lint:
-  stage: build
-  script:
-    - echo "Linting Bicep files..."
-    - pwsh -Command "Lint-Bicep.ps1 -Path './src' -Recurse"
-  rules:
-    - if: $CI_COMMIT_BRANCH
-      when: always
-    - if: $CI_MERGE_REQUEST_ID
-
-build-bicep:
-  stage: build
-  script:
-    - echo "Building Bicep files..."
-    - pwsh -Command "Build-Bicep.ps1 -File './src/main.bicep' -ParamFile './config/main-${STAGE}-${LOCATION}.bicepparam' -OutPath './artifacts'"
-  artifacts:
-    paths:
-      - ./artifacts
-    expire_in: 1 hour
-    when: on_success
-  rules:
-    - if: $CI_COMMIT_BRANCH
-      when: always
-    - if: $CI_MERGE_REQUEST_ID
-
-deploy-test:
-  stage: deploy
-  before_script:
-    - echo "Login to Azure..."
-    - pwsh -Command "Connect-Azure.ps1 -TenantId ${AZURE_TENANT_ID} -SubscriptionId ${AZURE_SUBSCRIPTION_ID} -ApplicationId ${AZURE_APPLICATION_ID} -ClientSecret (ConvertTo-SecureString ${AZURE_CLIENT_SECRET} -AsPlainText -Force) -UseServicePrincipal"
-  script:
-    - echo "Deploying to test environment..."
-    - pwsh -Command "Deploy-Bicep.ps1 -DeploymentName 'bicep-deployment-stack' -TemplateFile './artifacts/main.json' -TemplateParameterFile './artifacts/main-${STAGE}-${LOCATION}.parameters.json' -Location '${LOCATION}' -Test"
-  needs:
-    - bicep-lint
-    - build-bicep
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-
-deploy:
-  stage: deploy
-  before_script:
-    - echo "Login to Azure..."
-    - pwsh -Command "Connect-Azure.ps1 -TenantId ${AZURE_TENANT_ID} -SubscriptionId ${AZURE_SUBSCRIPTION_ID} -ApplicationId ${AZURE_APPLICATION_ID} -ClientSecret (ConvertTo-SecureString ${AZURE_CLIENT_SECRET} -AsPlainText -Force) -UseServicePrincipal"
-  script:
-    - echo "Deploying to production environment..."
-    - pwsh -Command "Deploy-Bicep.ps1 -DeploymentName 'bicep-deployment-stack' -TemplateFile './artifacts/main.json' -TemplateParameterFile './artifacts/main-${STAGE}-${LOCATION}.parameters.json' -Location '${LOCATION}'"
-  needs:
-    - deploy-test
-    - build-bicep
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-
-```
 
 # Bicep Deployment
 
