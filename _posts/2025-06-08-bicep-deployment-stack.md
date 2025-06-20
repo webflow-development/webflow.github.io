@@ -10,23 +10,15 @@ featured: true
 hidden: false
 ---
 
-# THIS IS A DRAFT
+>**NOTE** THIS IS A DRAFT
 
 ## Table of Contents
-- [THIS IS A DRAFT](#this-is-a-draft)
-  - [Table of Contents](#table-of-contents)
 - [Why stack?](#why-stack)
 - [Pipeline Overview](#pipeline-overview)
 - [Prerequisites](#prerequisites)
-  - [Components](#components)
-    - [1. Azure Subscription](#1-azure-subscription)
-    - [2. GitLab Runner](#2-gitlab-runner)
-    - [3. Docker Image with Tooling](#3-docker-image-with-tooling)
-    - [4. Stack Repository](#4-stack-repository)
-    - [5. Inheritable Pipeline Definition](#5-inheritable-pipeline-definition)
-    - [6. Stack Versioning](#6-stack-versioning)
 - [How To](#how-to)
 - [Bicep Deployment](#bicep-deployment)
+- [Pipeline Variables](#pipeline-variables)
 - [Related Links](#related-links)
 
 # Why stack?
@@ -37,16 +29,29 @@ This guide describes a scalable Bicep Deployment Stack designed for efficient in
 
 The image above illustrates a layered architecture for the Bicep Deployment Stack:
 
-- **Docker Layer:** The `bicep-base-image` provides the foundational Docker image for deployments.
-- **CI/CD Layer (GitLab):** The `bicep-deployment-stack` builds on the base image and orchestrates deployments, including multiple deployment modules.
-- **Azure Layer:** Individual deployment modules (e.g., `deployment 1`, `deployment 2`, etc.) are included by the stack and represent specific Azure deployment scenarios.
+- **Docker Layer:** The `bicep-base-image` provides the foundational Docker image with all necessary tools for deployments within the pipeline or in a local devcontainer.
+- **CI/CD Layer (GitLab):** The `bicep-deployment-stack` builds on the base image and provides the centralized pipeline definition `bicep.gitlab-ci.yml`.
+- **Projects:** Individual deployments of infrastructure (e.g., `deployment 1`, `deployment 2`, etc.) that include the pipeline definition from the `bicep-deployment-stack` and represent specific Azure deployment scenarios.
 - **Local Development Layer:** The local development environment uses Visual Studio Code and a `devcontainer`, leveraging the same image for consistency across environments.
 
 Arrows labeled **`image`** indicate Docker image relationships, while arrows labeled **`include`** show how deployment modules are integrated in the diagram above. This structure ensures modularity, reusability, and consistency from local development to cloud deployment.
 
+Both the `bicep-base-image` and the `bicep-deployment-stack` repositories are versioned and can be updated by a dependency bot like `Renovate`.
+
 # Pipeline Overview
 
 ![Bicep Deployment Stack Overview](/assets/2025-06-08-bicep-deployment-stack/bicep-deployment-stack-pipeline.png)
+
+The image above illustrates the pipeline flow for a typical Bicep deployment project.
+
+- Developer pushes Bicep code changes to GitLab using VS Code.
+- The push triggers a GitLab CI pipeline defined in `bicep.gitlab-ci.yml`.
+- The pipeline runs in a Docker-based GitLab Runner using the `bicep-base-image`.
+- Pipeline steps:
+  - Lint and build the Bicep code into ARM JSON files as artifacts.
+  - Pass the artifacts to the validation and deployment stages.
+  - Validate deployments for test and production using Azure PowerShell.
+  - Deploy the validated code to Azure test and production environments.
 
 # Prerequisites
 
@@ -57,43 +62,15 @@ Before you begin, ensure you have the following:
 - Docker installed on your local machine or CI environment
 - Basic knowledge of Bicep, Azure Resource Manager (ARM), and CI/CD concepts
 - Visual Studio Code
-  
-## Components
-
-The stack consists of the following components:
-
-### 1. Azure Subscription
-- You need one or more Azure subscriptions (e.g., Dev, Test, Prod).
-
-### 2. GitLab Runner
-- You have to add contributor permissions to your GitLab runner, or use multiple runners for each environment. In my case, I use one App Registration for one Subscription. At large scale, I recommend using a Kubernetes Cluster with Managed Identities for each Subscription.
-
-### 3. Docker Image with Tooling
-- Contains all required tools: Bicep CLI, Azure CLI, PowerShell, and supporting scripts.
-- Ensures consistent build and deployment environments across projects.
-- Located in the `bicep-base-image` directory.
-
-### 4. Stack Repository
-- Central repository for pipeline definitions and stack versioning.
-- Houses the `bice.gitlab-ci.yml` file, which defines the CI/CD pipeline.
-- Enables version control and traceability for stack changes.
-
-### 5. Inheritable Pipeline Definition
-- The `bice.gitlab-ci.yml` pipeline is designed to be inherited by multiple projects.
-- Example: The `bicep-virtualmachine-deployment` project can reuse the same pipeline definition for consistent deployments.
-- Promotes DRY (Don't Repeat Yourself) principles and simplifies maintenance.
-
-### 6. Stack Versioning
-- Each deployment stack is versioned, allowing controlled rollouts and easy rollbacks.
-- Versioning is managed within the stack repository.
 
 # How To
 
 1. Create an Azure Subscription.
-2. Create an App Registration with a Client Secret. Add a Role Assignment with `Contributor` to your Subscription.
+2. Create an App Registration with a Client Secret. Add a Role Assignment with `Contributor` to your Subscriptions.
 3. Add the following GitLab variables to your `bicep-deployment-stack`:
     - AZURE_TENANT_ID
-    - AZURE_SUBSCRIPTION_ID
+    - AZURE_SUBSCRIPTION_TEST_ID
+    - AZURE_SUBSCRIPTION_PROD_ID
     - AZURE_APPLICATION_ID
     - AZURE_CLIENT_SECRET (Masked)
 4. Create three new repositories on GitLab:
@@ -113,7 +90,7 @@ include:
     ref: '1.0.41'
 ```
 
-Here is the required file structure for the Bicep deployment stack.
+Here is the required file structure for your projects.
 
 ```tree
 │   .gitignore
@@ -132,6 +109,27 @@ Here is the required file structure for the Bicep deployment stack.
             tags.bicep
             virtualmachine.bicep
 ```
+
+# Pipeline Variables
+
+It is possible to override the predefined pipeline variables as you desire.
+For example, if you want to deploy to another region you can set the `AZURE_LOCATION` variable to `switzerlandnorth`,
+but make sure there is an appropriate `.bicepparam` file in the config directory of the project.
+
+```yaml
+variables:
+  AZURE_LOCATION: "westeurope"
+  AZURE_DEPLOYMENT_NAME: "bicep-${ENVIRONMENT}-${AZURE_LOCATION}-deployment-stack"
+  BICEP_SOURCE_DIR: "./src"
+  BICEP_MAIN_FILE: "./src/main.bicep"
+  BICEP_PARAMETERS_DIR: "./config"
+  ARM_OUTPUT_DIR: "./artifacts"
+  ARM_TEMPLATE_FILE: "./artifacts/main.json"
+  ARM_PARAMETERS_FILE: "./artifacts/main-${ENVIRONMENT}-${AZURE_LOCATION}.parameters.json"
+  DENY_SETTINGS_MODE: "None"
+  ACTION_ON_UNMANAGE: "DeleteAll"
+```
+
 # Related Links
 
 - [Bicep Documentation](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview)
