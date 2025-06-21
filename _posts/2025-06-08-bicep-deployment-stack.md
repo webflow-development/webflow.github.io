@@ -137,6 +137,7 @@ variables:
 # Example
 
 You can find a complete example project demonstrating the Bicep Deployment Stack, including pipeline configuration and sample infrastructure code, in the following repository:
+
 [Bicep Deployment Stack on GitLab](https://gitlab.com/webflow-techblog/bicep-deployment-stack)
 
 # Related Links
