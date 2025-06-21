@@ -10,8 +10,6 @@ featured: true
 hidden: false
 ---
 
->**NOTE** THIS IS A DRAFT
-
 ## Table of Contents
 - [Why stack?](#why-stack)
 - [Pipeline Overview](#pipeline-overview)
