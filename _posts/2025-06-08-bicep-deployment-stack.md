@@ -19,6 +19,7 @@ hidden: false
 - [How To](#how-to)
 - [Bicep Deployment](#bicep-deployment)
 - [Pipeline Variables](#pipeline-variables)
+- [Example](#example)
 - [Related Links](#related-links)
 
 # Why stack?
@@ -39,6 +40,8 @@ Arrows labeled **`image`** indicate Docker image relationships, while arrows lab
 Both the `bicep-base-image` and the `bicep-deployment-stack` repositories are versioned and can be updated by a dependency bot like `Renovate`.
 
 # Pipeline Overview
+
+A high-level overview of the CI/CD pipeline stages and their roles in automating Bicep deployments to Azure.
 
 ![Bicep Deployment Stack Overview](/assets/2025-06-08-bicep-deployment-stack/bicep-deployment-stack-pipeline.png)
 
@@ -77,7 +80,6 @@ Before you begin, ensure you have the following:
    1. Repository for the base image with the Dockerfile.
    2. Repository for the deployment stack.
    3. Repository for the effective deployment of your infrastructure on Azure.
-   4. (Optional): You can create more repositories to deploy different infrastructure use cases.
 
 # Bicep Deployment
 
@@ -85,7 +87,7 @@ Just include the `bicep.gitlab-ci.yml` file in your project with the correct ver
 
 ```yaml
 include: 
-  - project: 'webflow-development/bicep/bicep-deployment-stack'
+  - project: 'YOUR_BICEP_DEPLOYMENT_STACK_PATH'
     file: 'bicep.gitlab-ci.yml'
     ref: '1.0.41'
 ```
@@ -112,9 +114,11 @@ Here is the required file structure for your projects.
 
 # Pipeline Variables
 
-It is possible to override the predefined pipeline variables as you desire.
-For example, if you want to deploy to another region you can set the `AZURE_LOCATION` variable to `switzerlandnorth`,
-but make sure there is an appropriate `.bicepparam` file in the config directory of the project.
+Key pipeline variables defined in the Bicep stack pipeline definition. Adjust these to fit your Azure environment and project needs.
+
+> **NOTE:**  
+> For example, if you want to deploy to another region, you can set the `AZURE_LOCATION` variable to `switzerlandnorth`.  
+> Make sure there is an appropriate `.bicepparam` file in the `config` directory of the project.
 
 ```yaml
 variables:
@@ -129,6 +133,11 @@ variables:
   DENY_SETTINGS_MODE: "None"
   ACTION_ON_UNMANAGE: "DeleteAll"
 ```
+
+# Example
+
+You can find a complete example project demonstrating the Bicep Deployment Stack, including pipeline configuration and sample infrastructure code, in the following repository:
+[Bicep Deployment Stack on GitLab](https://gitlab.com/webflow-techblog/bicep-deployment-stack)
 
 # Related Links
 
