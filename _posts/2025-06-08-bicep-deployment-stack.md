@@ -2,7 +2,7 @@
 layout: post
 title:  "Bicep Deployment Stack"
 author: "Paulo Thüler"
-categories: [ Azure ]
+categories: [ Development ]
 tags: [ Azure, Bicep, Gitlab, CI/CD, IaC ]
 image: assets/2025-06-08-bicep-deployment-stack/bicep-deployment-stack-avatar.png
 description: "A scalable Bicep Deployment Stack to deploy your resources with Bicep, deployment stacks, and GitLab pipelines."
