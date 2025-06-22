@@ -205,8 +205,8 @@
         <mxCell id="3" value="validate-prod" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="415" y="209" width="80" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="7" value="Build" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="430" y="140" width="50" height="30" as="geometry" />
+        <mxCell id="7" value="Validate" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="420" y="140" width="70" height="30" as="geometry" />
         </mxCell>
         <mxCell id="11" value="Azure PowerShell" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://cdn.iconscout.com/icon/free/png-256/free-powershell-logo-icon-download-in-svg-png-gif-file-formats--technology-social-media-company-brand-vol-5-pack-logos-icons-2945093.png;" parent="1" vertex="1">
           <mxGeometry x="440" y="75" width="30" height="30" as="geometry" />
