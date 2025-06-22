@@ -10,9 +10,12 @@ comments: false
     <img src="{{ site.baseurl }}/assets/images/paulo-avatar.png" alt="Paulo Thüler" style="width: 100px; height: 100px; border-radius: 50%;">
     <div>
         My name is Paulo Thüler, and I am an IT professional with a deep interest in cloud technologies, automation, and DevOps practices. My focus is on integrating Microsoft Azure, Microsoft 365 services, and CI/CD pipelines to optimize and streamline modern development workflows.
-        <div style="margin-top: 10px;">
+        <div style="margin-top: 10px; display: flex; gap: 15px; align-items: center;">
             <a target="_blank" href="https://www.linkedin.com/in/paulo-th%C3%BCler-686441109/" onclick="window.open(this.href, 'width=550,height=435');return false;">
                 <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="mailto:info@webflow.ch" title="Send Mail">
+                <i class="fas fa-envelope"></i>
             </a>
         </div>
     </div>
