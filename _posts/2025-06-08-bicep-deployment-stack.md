@@ -11,7 +11,8 @@ hidden: false
 ---
 
 ## Table of Contents
-- [Why stack?](#why-stack)
+- [Overview](#overview)
+  - [Benefits](#benefits)
 - [Pipeline Overview](#pipeline-overview)
 - [Prerequisites](#prerequisites)
 - [How To](#how-to)
@@ -21,9 +22,19 @@ hidden: false
     - [Results](#results)
 - [Related Links](#related-links)
 
-# Why stack?
+# Overview
 
-This guide describes a scalable Bicep Deployment Stack designed for efficient infrastructure deployment using Bicep, Azure Deployment Stacks, and GitLab pipelines. The solution is modular and reusable, following best practices for Infrastructure as Code (IaC).
+This guide describes a scalable Bicep Deployment Stack designed for efficient infrastructure deployment using Bicep, Azure Deployment Stacks, and GitLab pipelines. The solution is modular and reusable, following best practices for Infrastructure as Code (IaC). 
+
+## Benefits
+
+- **Declarative:** Infrastructure as code for predictable, repeatable deployments.
+- **Clear Output:** Actionable pipeline outputs for easy troubleshooting.
+- **Consistent & Portable:** Same tools and process from local dev to production using Docker and dev containers.
+- **Automated & Auditable:** Fast, transparent, reliable CI/CD with full change tracking in Git.
+- **Collaborative & Testable:** Team workflows with code reviews and pre-deployment validation.
+- **Scalable & Integrated:** Manage multiple environments with seamless GitLab, Azure, and Bicep integration.
+- **Secure:** Built-in secrets and permissions management.
 
 ![Bicep Deployment Stack](/assets/2025-06-08-bicep-deployment-stack/bicep-deployment-stack.png)
 
@@ -32,19 +43,17 @@ The image above illustrates a layered architecture for the Bicep Deployment Stac
 - **Docker Layer:** The `bicep-base-image` provides the foundational Docker image with all necessary tools for deployments within the pipeline or in a local devcontainer.
 - **CI/CD Layer (GitLab):** The `bicep-stack` builds on the base image and provides the centralized pipeline definition `bicep.gitlab-ci.yml`.
 - **Projects (GitLab):** Individual deployments of infrastructure (e.g., `deployment 1`, `deployment 2`, etc.) that include the pipeline definition from the `bicep-stack` and represent specific Azure deployment scenarios.
-- **Local Development Layer:** The local development environment uses Visual Studio Code and a `devcontainer`, leveraging the same image for consistency across environments.
+- **Local Development Layer (VS Code):** The local development environment uses Visual Studio Code and a `devcontainer`, leveraging the same image for consistency across environments.
 
-Arrows labeled **`image`** indicate Docker image relationships, while arrows labeled **`include`** show how deployment modules are integrated in the diagram above. This structure ensures modularity, reusability, and consistency from local development to cloud deployment.
+Arrows labeled **`image`** indicate which Docker image the pipeline will use, while arrows labeled **`include`** show how projects include the centralized and versioned pipeline definition `bicep.gitlab-ci.yml` . This structure ensures modularity, reusability, and consistency from local development to cloud deployment.
 
 Both the `bicep-base-image` and the `bicep-stack` repositories are versioned and can be updated by a dependency bot like `Renovate`.
 
 # Pipeline Overview
 
-A high-level overview of the CI/CD pipeline stages and their roles in automating Bicep deployments to Azure.
+The image above illustrates a high-level overview of the CI/CD pipeline stages and their roles in automating Bicep deployments to Azure.
 
 ![Bicep Deployment Stack Overview](/assets/2025-06-08-bicep-deployment-stack/bicep-deployment-stack-pipeline.png)
-
-The image above illustrates the pipeline flow for a typical Bicep deployment project.
 
 - Developer pushes Bicep code changes to GitLab using VS Code.
 - The push triggers a GitLab CI pipeline defined in `bicep.gitlab-ci.yml`.
@@ -53,13 +62,13 @@ The image above illustrates the pipeline flow for a typical Bicep deployment pro
   - Lint and build the Bicep code into ARM JSON files as artifacts.
   - Pass the artifacts to the validation and deployment stages.
   - Validate deployments for test and production using Azure PowerShell.
-  - Deploy the validated code to Azure test and production environments.
+  - Deploy the validated code as Azure deployment stack to Azure test and production environments.
 
 # Prerequisites
 
 Before you begin, ensure you have the following:
 
-- An active Azure subscription
+- Active Azure subscriptions
 - Access to a GitLab instance (self-hosted or gitlab.com)
 - Docker installed on your local machine or CI environment
 - Basic knowledge of Bicep, Azure Resource Manager (ARM), and CI/CD concepts
@@ -69,7 +78,7 @@ Before you begin, ensure you have the following:
 
 1. Create two Azure Subscriptions (test and Production Environemnt).
 2. Create an App Registration with a Client Secret. Add a Role Assignment with `Contributor` to your Subscriptions.
-3. Add the following GitLab variables to your `bicep-deployment-stack`:
+3. Add the following GitLab CI variables to your `bicep-deployment-stack` group:
     - AZURE_TENANT_ID
     - AZURE_SUBSCRIPTION_TEST_ID
     - AZURE_SUBSCRIPTION_PROD_ID
@@ -91,7 +100,7 @@ Just include the `bicep.gitlab-ci.yml` file in your project with the correct ver
 include: 
   - project: 'YOUR_BICEP_DEPLOYMENT_STACK_PATH'
     file: 'bicep.gitlab-ci.yml'
-    ref: '1.0.41'
+    ref: '1.0.xx'
 ```
 
 Here is the required file structure for your projects.
@@ -140,7 +149,7 @@ variables:
 
 You can find a complete example project demonstrating the Bicep Deployment Stack, including pipeline configuration and sample infrastructure code, in the following repository:
 
-**[Bicep Deployment Stack on GitLab](https://gitlab.com/webflow-techblog/bicep-deployment-stack)**
+> **[Bicep Deployment Stack on GitLab](https://gitlab.com/webflow-techblog/bicep-deployment-stack)**
 
 ### Results
 
@@ -161,6 +170,10 @@ This is how my example looks like on Azure.
   <img src="/assets/2025-06-08-bicep-deployment-stack/bicep-deployment-stack-resources.png" alt="Resources" style="max-width:100%; height:auto;" />
 </a>
 
+**Azure deployment stacks**
+<a href="/assets/2025-06-08-bicep-deployment-stack/bicep-deployment-stack-ads.png" target="_blank">
+  <img src="/assets/2025-06-08-bicep-deployment-stack/bicep-deployment-stack-ads.png" alt="Azure deployment stacks" style="max-width:100%; height:auto;" />
+</a>>
 
 # Related Links
 
@@ -168,7 +181,9 @@ This is how my example looks like on Azure.
 - [Azure Deployment Stacks](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/deployment-stacks?tabs=azure-powershell)
 - [GitLab CI/CD Documentation](https://docs.gitlab.com/ee/ci/)
 - [Docker Documentation](https://docs.docker.com/)
+- [Developing inside a Container](https://code.visualstudio.com/docs/devcontainers/containers)
 - [Infrastructure as Code (IaC) Concepts](https://learn.microsoft.com/en-us/devops/deliver/what-is-infrastructure-as-code)
+- [Trunk-Based Development](https://trunkbaseddevelopment.com/)
 
 ---
 
