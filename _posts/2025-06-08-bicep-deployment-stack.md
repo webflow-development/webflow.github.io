@@ -140,7 +140,7 @@ variables:
 
 You can find a complete example project demonstrating the Bicep Deployment Stack, including pipeline configuration and sample infrastructure code, in the following repository:
 
-[Bicep Deployment Stack on GitLab](https://gitlab.com/webflow-techblog/bicep-deployment-stack)
+**[Bicep Deployment Stack on GitLab](https://gitlab.com/webflow-techblog/bicep-deployment-stack)**
 
 ### Results
 
@@ -151,7 +151,7 @@ This is how my example looks like on Azure.
   <img src="/assets/2025-06-08-bicep-deployment-stack/bicep-deployment-stack-subscriptions.png" alt="Subscriptions" style="max-width:100%; height:auto;" />
 </a>
 
-**Resource Group**
+**Resource group**
 <a href="/assets/2025-06-08-bicep-deployment-stack/bicep-deployment-stack-rg.png" target="_blank">
   <img src="/assets/2025-06-08-bicep-deployment-stack/bicep-deployment-stack-rg.png" alt="Resource Groups" style="max-width:100%; height:auto;" />
 </a>
@@ -165,7 +165,6 @@ This is how my example looks like on Azure.
 # Related Links
 
 - [Bicep Documentation](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview)
-- [Azure Documentation](https://learn.microsoft.com/en-us/azure/)
 - [Azure Deployment Stacks](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/deployment-stacks?tabs=azure-powershell)
 - [GitLab CI/CD Documentation](https://docs.gitlab.com/ee/ci/)
 - [Docker Documentation](https://docs.docker.com/)
