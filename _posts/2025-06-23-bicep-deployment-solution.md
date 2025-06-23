@@ -27,7 +27,7 @@ hidden: false
 
 # Overview
 
-This guide describes a centralized and scalable Bicep Deployment Solution designed for efficient infrastructure deployment using Bicep, Azure Deployment Stacks, and GitLab pipelines. The solution is modular and reusable, following best practices for Infrastructure as Code (IaC). 
+This guide describes a centralized and scalable Bicep Deployment Solution designed for efficient infrastructure deployment using Bicep, Azure Deployment Stacks, and GitLab pipelines. The solution is modular and reusable, following best practices for Infrastructure as Code (IaC).
 
 # Solution
 
@@ -38,10 +38,11 @@ The image illustrates a layered architecture for the Bicep Deployment Solution:
 - **Docker Layer:** The `bicep-base-image` provides the foundational Docker image with all necessary tools for deployments within the pipeline or in a local devcontainer.
 - **CI/CD Layer (GitLab):** The `bicep-deployment-solution` builds on the base image and provides the centralized pipeline definition `bicep.gitlab-ci.yml`.
 - **Projects (GitLab):** Individual deployments of infrastructure (e.g., `deployment 1`, `deployment 2`, etc.) that include the pipeline definition from the `bicep-deployment-solution` and represent specific Azure deployment scenarios.
-- **Local Development Layer:** The l (VS Code)ocal development environment uses Visual Studio Code and a `devcontainer`, leveraging the same image for consistency across environments.
+- **Local Development Layer:** The local development environment (VS Code) uses Visual Studio Code and a `devcontainer`, leveraging the same image for consistency across environments.
 
-Arrows laArrows labeled **`image`** indicate which Docker image the pipeline will use, while arrows labeled **`include`** show how projects include the centralized and versioned pipeline definition `bicep.gitlab-ci.yml` . This structure ensures modularity, reusability, and consistency from local development to cloud deployment.
- `bicep-base-image` and the `bicep-deployment-solution` repositories are versioned and can be updated by a dependency bot like `Renovate`.
+Arrows labeled **`image`** indicate which Docker image the pipeline will use, while arrows labeled **`include`** show how projects include the centralized and versioned pipeline definition `bicep.gitlab-ci.yml`. This structure ensures modularity, reusability, and consistency from local development to cloud deployment.
+
+`bicep-base-image` and the `bicep-deployment-solution` repositories are versioned and can be updated by a dependency bot like `Renovate`.
 
 ## Benefits
 
@@ -67,7 +68,7 @@ The image illustrates a high-level overview of the CI/CD pipeline stages and the
   - Lint and build the Bicep code into ARM JSON files as artifacts.
   - Pass the artifacts to the validation and deployment stages.
   - Validate deployments for test and production using Azure PowerShell.
-  - Deploy the validated codas Azure deployment stack e to Azure test and production environments.
+  - Deploy the validated code as Azure deployment stack(s) to Azure test and production environments.
 
 # Prerequisites
 
@@ -80,8 +81,8 @@ Before you begin, ensure you have the following:
 
 # How To
 
-1. Create two Azure Subscriptions (Test and Production Environemnt).
-2. Create an App Registration with a Client Secret. Add a Role Assignment with `Contributor` to your Subscriptions.
+1. Create two Azure Subscriptions (Test and Production Environment).
+2. Create an App Registration with a Client Secret. Add a Role Assignment with the `Contributor` role to your Subscriptions.
 3. Add the following GitLab CI variables to your `bicep-deployment-solution` group:
     - AZURE_TENANT_ID
     - AZURE_SUBSCRIPTION_TEST_ID
