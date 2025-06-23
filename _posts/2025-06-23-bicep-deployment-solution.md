@@ -10,6 +10,9 @@ featured: true
 hidden: false
 ---
 
+> **TL;DR:**
+> This guide shows how to set up a scalable, modular Bicep deployment solution using GitLab CI/CD and Docker for Azure. It covers prerequisites, pipeline structure, variables, and project setup. The solution ensures consistent, automated, and secure deployments from local development to production, leveraging reusable pipeline definitions and best practices for Infrastructure as Code (IaC).
+
 - [Overview](#overview)
 - [Solution](#solution)
   - [Benefits](#benefits)
@@ -69,7 +72,6 @@ The image illustrates a high-level overview of the CI/CD pipeline stages and the
 # Prerequisites
 
 Before you begin, ensure you have the following:
-
 - Active Azure subscriptions
 - Access to a GitLab instance (self-hosted or gitlab.com)
 - Docker installed on your local machine or CI environment
@@ -126,7 +128,7 @@ Here is the required file structure for your projects.
 
 # Pipeline Variables
 
-Key pipeline variables defined in the Bicep stack pipeline definition. Adjust these to fit your Azure environment and project needs.
+Key variables defined in the `bicep-deployment-solution` pipeline definition. Adjust these to fit your Azure environment and project needs.
 
 > **NOTE:**  
 > For example, if you want to deploy to another region, you can set the `AZURE_LOCATION` variable to `switzerlandnorth`.  
