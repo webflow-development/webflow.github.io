@@ -15,7 +15,7 @@ hidden: false
 
 - [Overview](#overview)
 - [Solution](#solution)
-  - [Benefits](#benefits)
+    - [Benefits](#benefits)
 - [Pipeline Overview](#pipeline-overview)
 - [Prerequisites](#prerequisites)
 - [How-To](#how-to)
@@ -44,7 +44,7 @@ Arrows labeled **`image`** indicate which Docker image the pipeline will use, wh
 
 `bicep-base-image` and the `bicep-deployment-solution` repositories are versioned and can be updated by a dependency bot like Renovate.
 
-## Benefits
+### Benefits
 
 - **Declarative:** Infrastructure as code for predictable, repeatable deployments.
 - **Clear Output:** Actionable pipeline outputs for easy troubleshooting.
