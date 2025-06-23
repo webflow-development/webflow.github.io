@@ -27,7 +27,7 @@ In this space, I share my experiences, tips, and solutions based on my work with
 
 ### Specializations
 
-I specialize in the following areas:
+I am specialized in the following areas:
 
 * **Microsoft Azure** – Cloud platform management, infrastructure deployment, and application hosting.
 * **Microsoft 365 Services** – Leveraging cloud-based tools like Entra ID or Intune for enhanced collaboration.
