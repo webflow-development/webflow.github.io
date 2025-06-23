@@ -3,7 +3,7 @@ layout: post
 title:  "Bicep Deployment Solution for GitLab"
 author: "Paulo Thüler"
 categories: [ Azure, GitLab ]
-tags: [ Azure, Bicep, Gitlab, CI/CD, IaC ]
+tags: [ Azure, Bicep, GitLab, CI/CD, IaC ]
 image: assets/2025-06-08-bicep-deployment-solution/bicep-deployment-solution-avatar.png
 description: "A scalable Bicep Deployment Solution to deploy your resources with Bicep, Azure deployment stacks, and GitLab pipelines."
 featured: true
@@ -18,7 +18,7 @@ hidden: false
   - [Benefits](#benefits)
 - [Pipeline Overview](#pipeline-overview)
 - [Prerequisites](#prerequisites)
-- [How To](#how-to)
+- [How-To](#how-to)
 - [Bicep Deployment](#bicep-deployment)
 - [Pipeline Variables](#pipeline-variables)
 - [Example](#example)
@@ -31,18 +31,18 @@ This guide describes a centralized and scalable Bicep Deployment Solution design
 
 # Solution
 
-The image illustrates a layered architecture for the Bicep Deployment Solution:
+The following image illustrates the layered architecture of the Bicep Deployment Solution:
 
 ![Bicep Deployment Solution](/assets/2025-06-08-bicep-deployment-solution/bicep-deployment-solution.png)
 
-- **Docker Layer:** The `bicep-base-image` provides the foundational Docker image with all necessary tools for deployments within the pipeline or in a local devcontainer.
+- **Docker Layer:** The `bicep-base-image` provides the foundational Docker image with all necessary tools for deployments within the pipeline or in a local dev container.
 - **CI/CD Layer (GitLab):** The `bicep-deployment-solution` builds on the base image and provides the centralized pipeline definition `bicep.gitlab-ci.yml`.
 - **Projects (GitLab):** Individual deployments of infrastructure (e.g., `deployment 1`, `deployment 2`, etc.) that include the pipeline definition from the `bicep-deployment-solution` and represent specific Azure deployment scenarios.
-- **Local Development Layer:** The local development environment (VS Code) uses Visual Studio Code and a `devcontainer`, leveraging the same image for consistency across environments.
+- **Local Development Layer:** The local development environment (VS Code) uses Visual Studio Code and a dev container, leveraging the same image for consistency across environments.
 
 Arrows labeled **`image`** indicate which Docker image the pipeline will use, while arrows labeled **`include`** show how projects include the centralized and versioned pipeline definition `bicep.gitlab-ci.yml`. This structure ensures modularity, reusability, and consistency from local development to cloud deployment.
 
-`bicep-base-image` and the `bicep-deployment-solution` repositories are versioned and can be updated by a dependency bot like `Renovate`.
+`bicep-base-image` and the `bicep-deployment-solution` repositories are versioned and can be updated by a dependency bot like Renovate.
 
 ## Benefits
 
@@ -79,11 +79,11 @@ Before you begin, ensure you have the following:
 - Basic knowledge of Bicep, Azure Resource Manager (ARM), and CI/CD concepts
 - Visual Studio Code
 
-# How To
+# How-To
 
 1. Create two Azure Subscriptions (Test and Production Environment).
 2. Create an App Registration with a Client Secret. Add a Role Assignment with the `Contributor` role to your Subscriptions.
-3. Add the following GitLab CI variables to your `bicep-deployment-solution` group:
+3. Add the following GitLab CI/CD variables to your `bicep-deployment-solution` group in GitLab:
     - AZURE_TENANT_ID
     - AZURE_SUBSCRIPTION_TEST_ID
     - AZURE_SUBSCRIPTION_PROD_ID
@@ -92,14 +92,14 @@ Before you begin, ensure you have the following:
 4. Create three new repositories on GitLab:
    1. Repository for the base image with the Dockerfile.
    2. Repository for the deployment solution.
-   3. Repository for the effective deployment of your infrastructure on Azure.
+   3. Repository for deploying your actual infrastructure to Azure.
 
 > **NOTE:**  
 > For large-scale environments and improved security, it is recommended to use your own GitLab Runner infrastructure with Kubernetes. For each purpose, use a different service principal without client secrets, or use managed identities and assign permissions directly via RBAC.
 
 # Bicep Deployment
 
-Just include the `bicep.gitlab-ci.yml` file in your project with the correct version `ref`.
+To use the deployment solution, include the `bicep.gitlab-ci.yml` file in your project, specifying the correct version `ref`.
 
 ```yaml
 include: 
@@ -129,7 +129,7 @@ Here is the required file structure for your projects.
 
 # Pipeline Variables
 
-Key variables defined in the `bicep-deployment-solution` pipeline definition. Adjust these to fit your Azure environment and project needs.
+Below are key variables defined in the `bicep-deployment-solution` pipeline. Adjust them to fit your Azure environment and project requirements.
 
 > **NOTE:**  
 > For example, if you want to deploy to another region, you can set the `AZURE_LOCATION` variable to `switzerlandnorth`.  
@@ -151,13 +151,13 @@ variables:
 
 # Example
 
-You can find a complete example project demonstrating the Bicep Deployment Stack, including pipeline configuration and sample infrastructure code, in the following repository:
+A complete example project demonstrating the Bicep Deployment Solution, including pipeline configuration and sample infrastructure code, is available in the following repository:
 
 > **[Bicep Deployment Solution on GitLab](https://gitlab.com/webflow-techblog/bicep-deployment-solution)**
 
 ### Results
 
-This is how my example looks like on Azure.
+This is how my example looks on Azure.
 
 **Subscriptions**
 <a href="/assets/2025-06-08-bicep-deployment-solution/bicep-deployment-solution-subscriptions.png" target="_blank">
@@ -177,7 +177,7 @@ This is how my example looks like on Azure.
 **Azure deployment stacks**
 <a href="/assets/2025-06-08-bicep-deployment-solution/bicep-deployment-solution-ads.png" target="_blank">
   <img src="/assets/2025-06-08-bicep-deployment-solution/bicep-deployment-solution-ads.png" alt="Azure deployment stacks" style="max-width:100%; height:auto;" />
-</a>>
+</a>
 
 # Related Links
 
