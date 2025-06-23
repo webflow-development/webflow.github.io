@@ -61,14 +61,7 @@ The image illustrates a high-level overview of the CI/CD pipeline stages and the
 
 ![Bicep Deployment Pipeline Overview](/assets/2025-06-08-bicep-deployment-solution/bicep-deployment-solution-pipeline.png)
 
-- Developer pushes Bicep code changes to GitLab using VS Code.
-- The push triggers a GitLab CI pipeline defined in `bicep.gitlab-ci.yml`.
-- The pipeline runs in a Docker-based GitLab Runner using the `bicep-base-image`.
-- Pipeline steps:
-  - Lint and build the Bicep code into ARM JSON files as artifacts.
-  - Pass the artifacts to the validation and deployment stages.
-  - Validate deployments for test and production using Azure PowerShell.
-  - Deploy the validated code as Azure deployment stack(s) to Azure test and production environments.
+When a developer pushes Bicep code changes to GitLab using Visual Studio Code, the action triggers a GitLab CI pipeline defined in the `bicep.gitlab-ci.yml` file. This pipeline runs within a Docker-based GitLab Runner that uses the `bicep-base-image` to ensure a consistent environment. The pipeline first lints and builds the Bicep code, generating ARM JSON files as artifacts. These artifacts are then passed to the validation and deployment stages. The pipeline validates deployments for both test and production environments using Azure PowerShell, and upon successful validation, deploys the code as Azure deployment stacks to the respective Azure test and production environments.
 
 # Prerequisites
 
@@ -83,16 +76,18 @@ Before you begin, ensure you have the following:
 
 1. Create two Azure Subscriptions (Test and Production Environment).
 2. Create an App Registration with a Client Secret. Add a Role Assignment with the `Contributor` role to your Subscriptions.
-3. Add the following GitLab CI/CD variables to your `bicep-deployment-solution` group in GitLab:
-    - AZURE_TENANT_ID
-    - AZURE_SUBSCRIPTION_TEST_ID
-    - AZURE_SUBSCRIPTION_PROD_ID
-    - AZURE_APPLICATION_ID
-    - AZURE_CLIENT_SECRET (Masked)
-4. Create three new repositories on GitLab:
+3. Create three new repositories on GitLab:
    1. Repository for the base image with the Dockerfile.
    2. Repository for the deployment solution.
    3. Repository for deploying your actual infrastructure to Azure.
+
+Add the following GitLab CI/CD variables to your `bicep-deployment-solution` group in GitLab:
+
+- `AZURE_TENANT_ID`: Azure Active Directory Tenant ID
+- `AZURE_SUBSCRIPTION_TEST_ID`: Test Azure Subscription ID
+- `AZURE_SUBSCRIPTION_PROD_ID`: Production Azure Subscription ID
+- `AZURE_APPLICATION_ID`: Azure App Registration (Client) ID
+- `AZURE_CLIENT_SECRET`: Azure App Registration Secret (Masked/Secret)
 
 > **NOTE:**  
 > For large-scale environments and improved security, it is recommended to use your own GitLab Runner infrastructure with Kubernetes. For each purpose, use a different service principal without client secrets, or use managed identities and assign permissions directly via RBAC.
