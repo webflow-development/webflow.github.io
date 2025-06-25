@@ -6,7 +6,7 @@ categories: [ Azure, GitLab ]
 tags: [ Azure, Bicep, GitLab, CI/CD, IaC ]
 image: assets/2025-06-08-bicep-deployment-solution/bicep-deployment-solution-avatar.png
 description: "A scalable Bicep Deployment Solution to deploy your resources with Bicep, Azure deployment stacks, and GitLab pipelines."
-featured: true
+featured: false
 hidden: false
 ---
 
