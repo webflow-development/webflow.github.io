@@ -6,7 +6,7 @@ categories: [ Azure ]
 tags: [ Azure ]
 image: ""
 description: "Naming Conventions for Azure Resources"
-featured: true
+featured: false
 hidden: true
 ---
 
