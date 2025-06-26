@@ -87,7 +87,6 @@ Of if you have multiple instances in the same resource group:
 
 If it requires additional information on your resource or resource group, Microsoft recommends to use tags to organize your Azure resources. ([Microsoft](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/tag-resources))
 
-
 # Related Links
 - [Microsoft - Define your naming convention](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming)
 - [Microsoft - Abbreviation recommendations for Azure resources](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-abbreviations)

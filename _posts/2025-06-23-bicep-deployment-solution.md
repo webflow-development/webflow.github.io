@@ -176,13 +176,13 @@ This is how my example looks on Azure.
 
 # Related Links
 
-- [Bicep Documentation](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview)
-- [Azure Deployment Stacks](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/deployment-stacks?tabs=azure-powershell)
-- [GitLab CI/CD Documentation](https://docs.gitlab.com/ee/ci/)
-- [Docker Documentation](https://docs.docker.com/)
-- [Developing inside a Container](https://code.visualstudio.com/docs/devcontainers/containers)
-- [Infrastructure as Code (IaC) Concepts](https://learn.microsoft.com/en-us/devops/deliver/what-is-infrastructure-as-code)
-- [Trunk-Based Development](https://trunkbaseddevelopment.com/)
+- [Docker - Documentation](https://docs.docker.com/)
+- [GitLab - CI/CD Documentation](https://docs.gitlab.com/ee/ci/)
+- [Microsoft - Azure Deployment Stacks](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/deployment-stacks?tabs=azure-powershell)
+- [Microsoft - Bicep Documentation](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview)
+- [Microsoft - Infrastructure as Code (IaC) Concepts](https://learn.microsoft.com/en-us/devops/deliver/what-is-infrastructure-as-code)
+- [Microsoft -Developing inside a Container](https://code.visualstudio.com/docs/devcontainers/containers)
+- [Paul Hammant  -Trunk-Based Development](https://trunkbaseddevelopment.com/)
 
 ---
 
