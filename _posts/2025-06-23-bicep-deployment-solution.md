@@ -181,8 +181,8 @@ This is how my example looks on Azure.
 - [Microsoft - Azure Deployment Stacks](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/deployment-stacks?tabs=azure-powershell)
 - [Microsoft - Bicep Documentation](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview)
 - [Microsoft - Infrastructure as Code (IaC) Concepts](https://learn.microsoft.com/en-us/devops/deliver/what-is-infrastructure-as-code)
-- [Microsoft -Developing inside a Container](https://code.visualstudio.com/docs/devcontainers/containers)
-- [Paul Hammant  -Trunk-Based Development](https://trunkbaseddevelopment.com/)
+- [Microsoft - Developing inside a Container](https://code.visualstudio.com/docs/devcontainers/containers)
+- [Paul Hammant - Trunk-Based Development](https://trunkbaseddevelopment.com/)
 
 ---
 

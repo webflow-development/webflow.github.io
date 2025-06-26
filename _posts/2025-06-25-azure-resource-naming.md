@@ -3,7 +3,7 @@ layout: post
 title:  "Naming Conventions for Azure Resources"
 author: "Paulo Thüler"
 categories: [ Azure ]
-tags: [ Azure ]
+tags: [ Azure, Bicep, PowerShell, NamingConvention ]
 image: assets/2025-06-26-azure-naming-convention/naming-convention-avatar.png"
 description: "Naming Conventions for Azure Resources"
 featured: true
@@ -20,7 +20,8 @@ hidden: false
   - [Instances](#instances)
 - [Special Resource Names](#special-resource-names)
   - [Naming Restrictions](#naming-restrictions)
-- [Example](#example)
+  - [Example](#example)
+  - [Powershell](#powershell)
 - [Tags](#tags)
 - [Related Links](#related-links)
 
@@ -44,7 +45,7 @@ All the resources in your resource group should share the same lifecycle ([Micro
 
 Perhaps multiple instances of a resource type are required within a resource group. In such cases, an instance counter can be appended to the name. But as a reminder, do not break the rule of the root structure. Example:
 
-- webflow-preprod-westeurope-avd-hostpool-**001**
+- webflow-prod-westeurope-avd-hostpool-**001**
 - wf-iv7c2daboloe4-kv-**001**
 
 # Special Resource Names
@@ -53,35 +54,24 @@ Perhaps multiple instances of a resource type are required within a resource gro
 
 Azure offers resource types with specific limitations such as storageaccount, keyvault, and compute galleries. These resources require a globally unique name and have character restrictions. To address this, you can use the [`uniqueString()`](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/bicep-functions-string#uniquestring) function of bicep / arm. The `resource group id` contains all necessary information (subscriptionid, prefix, stage, region, workload) that defines a globally unique resource on Azure. This id serves as the value for the uniqueString() function.
 
-Example:
+## Example
 
 | Resource Type  | Code Example                                 | Result                  | Restriction                                                                                                                           |
 | -------------- | -------------------------------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | storageaccount | ${prefix}${uniqueString(resourceGroup().id)}st   | wf**iv7c2daboloe4**st   | [Microsoft.Storage](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/resource-name-rules#microsoftstorage)   |
 | keyvault       | ${prefix}-${uniqueString(resourceGroup().id)}-kv | wf-**iv7c2daboloe4**-kv | [Microsoft.KeyVault](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/resource-name-rules#microsoftkeyvault) |
 
-**NOTE:** The same unique string can be generated with the [AzExpression](https://www.powershellgallery.com/packages/AzExpression) module in PowerShell.
+## Powershell
 
-Example (PowerShell):
+The same unique string can be generated with the [AzExpression](https://www.powershellgallery.com/packages/AzExpression) module in PowerShell.
 
 ```powershell
 Install-Module AzExpression
 
-New-AzUniqueString -InputStrings "/subscriptions/SUBSCRIPTIONID/resourceGroups/webflow-preprod-westeurope-avd-rg"
+New-AzUniqueString -InputStrings "/subscriptions/SUBSCRIPTIONID/resourceGroups/webflow-prod-westeurope-avd-rg"
 ```
 
-This will result in the same unique string as the uniqueString() function.
-
-# Example
-
-A typical naming pattern for a storage account might look like:
-
-- `$${prefix}${uniqueString(resourceGroup().id)}st` (e.g., `wfiv7c2daboloe4st`)
-
-Of if you have multiple instances in the same resource group:
-
-- `webflow-preprod-westeurope-avd-hostpool-001`
-- `wf-iv7c2daboloe4-kv-001`
+This will result exactly in the same unique string as the uniqueString() function of bicep / arm.
 
 # Tags
 
