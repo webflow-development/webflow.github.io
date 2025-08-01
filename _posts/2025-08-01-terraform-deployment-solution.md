@@ -60,7 +60,7 @@ The image illustrates a high-level overview of the CI/CD pipeline stages and the
 
 ![Terraform Deployment Pipeline Overview](/assets/2025-08-01-terraform-deployment-solution/terraform-deployment-solution-pipeline.png)
 
-When a developer pushes Terraform code changes to GitLab using Visual Studio Code, the action triggers a GitLab CI pipeline defined in the `terraform.gitlab-ci.yml` file. This pipeline runs within a Docker-based GitLab Runner that uses the `terraform-base-image` to ensure a consistent environment. The pipeline first lints with `tflint` and make security check with `tfsec`, then `init` the Terraform code, generating the tfstate files as artifacts. These artifacts are then passed to the plan and apply stages. The pipeline plans the deployments for both test and production environments, and upon successful plan, deploys the code with Azure CLI to the respective Azure test and production environments.
+When a developer pushes Terraform code changes to GitLab using Visual Studio Code, the action triggers a GitLab CI pipeline defined in the `terraform.gitlab-ci.yml` file. This pipeline runs within a Docker-based GitLab Runner that uses the `terraform-base-image` to ensure a consistent environment. The pipeline first lints with `tflint` and makes a security check with `tfsec`, then `init` the Terraform code, generating the `tfstate` files as artifacts. These artifacts are then passed to the plan and apply stages. The pipeline plans the deployments for both test and production environments, and upon successful plan, deploys the code with Azure CLI to the respective Azure test and production environments.
 
 # Prerequisites
 
@@ -158,9 +158,7 @@ This is how my example looks on Azure.
 </a>
 
 **Resource group**
-<a href="/assets/2025-06-08-bicep-deployment-solution/bicep-deployment-solution-rg.png" target="_blank">
-  <img src="/assets/2025-06-08-bicep-deployment-solution/bicep-deployment-solution-rg.png" alt="Resource Groups" style="max-width:100%; height:auto;" />
-</a>
+n
 
 **Resources**
 <a href="/assets/2025-06-08-bicep-deployment-solution/bicep-deployment-solution-resources.png" target="_blank">
