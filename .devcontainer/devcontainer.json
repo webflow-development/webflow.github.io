@@ -19,6 +19,8 @@
             "extensions": [
                 "eamodio.gitlens",
                 "foxundermoon.shell-format",
+                "GitHub.copilot-chat",
+                "GitHub.copilot",
                 "GitLab.gitlab-workflow",
                 "redhat.vscode-yaml",
                 "vscode.git",
