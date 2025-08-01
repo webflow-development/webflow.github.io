@@ -6,7 +6,7 @@ categories: [ Azure ]
 tags: [ Azure, Bicep, PowerShell, NamingConvention ]
 image: assets/2025-06-26-azure-naming-convention/naming-convention-avatar.png"
 description: "Naming Conventions for Azure Resources"
-featured: true
+featured: false
 hidden: false
 ---
 
