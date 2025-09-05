@@ -18,6 +18,7 @@ hidden: true
     - [Benefits](#benefits)
 - [Pipeline Overview](#pipeline-overview)
 - [Prerequisites](#prerequisites)
+- [Terraform state files storage account deployment](#terraform-state-files-storage-account-deployment)
 - [How-To](#how-to)
 - [Terraform Deployment](#terraform-deployment)
 - [Pipeline Variables](#pipeline-variables)
@@ -72,14 +73,23 @@ Before you begin, ensure you have the following:
 - Visual Studio Code
 - Storage Account for Terraform State files
 
+# Terraform state files storage account deployment
+
+**Note:** To use Terraform state files, you must have an Azure Storage Account available before running your first Terraform deployment. This creates a bootstrapping challenge, as Terraform itself needs the storage to manage state.
+
+You can solve this by provisioning the storage account manually or using an automated approach like Bicep. I recommend a solution like my [Bicep Deployment Solution](https://webflow.ch/bicep-deployment-solution) to quickly bootstrap the required storage account for Terraform state management.
+
+> **[Storage Account](https://gitlab.com/webflow-techblog/terraform-deployment-solution/bicep-storageaccount-deployment)**
+
 # How-To
 
 1. Create two Azure Subscriptions (Test and Production Environment).
 2. Create an App Registration with a Client Secret. Add a Role Assignment with the `Contributor` role to your Subscriptions.
-3. Create three new repositories on GitLab:
+3. Create four new repositories on GitLab:
    1. Repository for the base image with the Dockerfile.
    2. Repository for the deployment solution.
    3. Repository for deploying your actual infrastructure to Azure.
+   4. Repository for the storage acccount to save the terraform state files.
 
 Add the following GitLab CI/CD variables to your `terraform-deployment-solution` group in GitLab:
 
@@ -148,6 +158,7 @@ A complete example project demonstrating the Terraform Deployment Solution, incl
 
 > **[Terraform Deployment Solution on GitLab](https://gitlab.com/webflow-techblog/terraform-deployment-solution)**
 
+
 <!-- ### Results
 
 This is how my example looks on Azure.
@@ -177,6 +188,7 @@ n
 - [Microsoft - Azure CLI](https://learn.microsoft.com/en-us/cli/azure)
 - [Microsoft - Infrastructure as Code (IaC) Concepts](https://learn.microsoft.com/en-us/devops/deliver/what-is-infrastructure-as-code)
 - [Microsoft - Developing inside a Container](https://code.visualstudio.com/docs/devcontainers/containers)
+- [Microsoft - Store Terraform state in Azure Storage](https://learn.microsoft.com/en-us/azure/developer/terraform/store-state-in-azure-storage?tabs=azure-cli)
 - [HashiCorp - Terraform Documentation](https://developer.hashicorp.com/terraform)
 - [Paul Hammant - Trunk-Based Development](https://trunkbaseddevelopment.com/)
 

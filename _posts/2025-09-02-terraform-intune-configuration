@@ -1,0 +1,11 @@
+---
+layout: post
+title:  "Intune configuration deployment with Terraform and GitLab"
+author: "Paulo Thüler"
+categories: [ Intune ]
+tags: [ Intune, Terraform, GitLab, CI/CD, ]
+image: assets/2025-06-26-azure-naming-convention/naming-convention-avatar.png"
+description: "Intune configuration deployment with Terraform and GitLab"
+featured: false
+hidden: true
+---
