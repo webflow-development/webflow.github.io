@@ -59,7 +59,9 @@ Arrows labeled **`image`** indicate which Docker image the pipeline will use, wh
 
 The image illustrates a high-level overview of the CI/CD pipeline stages and their roles in automating Bicep deployments to Azure.
 
-![Terraform Deployment Pipeline Overview](/assets/2025-08-01-terraform-deployment-solution/terraform-deployment-solution-pipeline.png)
+<a href="/assets/2025-08-01-terraform-deployment-solution/terraform-deployment-solution-pipeline.png" target="_blank">
+  <img src="/assets/2025-08-01-terraform-deployment-solution/terraform-deployment-solution-pipeline.png" alt="Terraform Deployment Pipeline Overview" style="max-width:100%; height:auto;" />
+</a>
 
 When a developer pushes Terraform code changes to GitLab using Visual Studio Code, the action triggers a GitLab CI pipeline defined in the `terraform.gitlab-ci.yml` file. This pipeline runs within a Docker-based GitLab Runner that uses the `terraform-base-image` to ensure a consistent environment. The pipeline first lints with `tflint` and makes a security check with `tfsec`, then `init` the Terraform code, generating the `tfstate` files as artifacts. These artifacts are then passed to the plan and apply stages. The pipeline plans the deployments for both test and production environments, and upon successful plan, deploys the code with Azure CLI to the respective Azure test and production environments.
 
