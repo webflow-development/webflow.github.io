@@ -3,7 +3,7 @@ layout: post
 title:  "Terraform Deployment Solution for GitLab"
 author: "Paulo Thüler"
 categories: [ Azure, GitLab ]
-tags: [ Azure, Terraform, GitLab, CI/CD, IaC, CoC ]
+tags: [ Azure, Terraform, GitLab, CI/CD, IaC ]
 image: assets/2025-08-01-terraform-deployment-solution/terraform-deployment-solution-avatar.png
 description: "A scalable Terrafom Deployment Solution to deploy your resources with Terraform, Azure CLI, and GitLab pipelines."
 featured: true
