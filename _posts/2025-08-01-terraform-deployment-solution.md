@@ -156,7 +156,7 @@ variables:
 
 A complete example project demonstrating the Terraform Deployment Solution, including pipeline configuration and sample infrastructure code, is available in the following repository:
 
-> **[Terraform Deployment Solution on GitLab](https://gitlab.com/webflow-techblog/terraform-deployment-solution)**
+> **[Terraform Deployment Solution on GitLab](https://gitlab.com/webflow-techblog/examples/terraform-virtualmachine-deployment)**
 
 
 <!-- ### Results

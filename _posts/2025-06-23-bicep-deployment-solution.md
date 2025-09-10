@@ -148,7 +148,7 @@ variables:
 
 A complete example project demonstrating the Bicep Deployment Solution, including pipeline configuration and sample infrastructure code, is available in the following repository:
 
-> **[Bicep Deployment Solution on GitLab](https://gitlab.com/webflow-techblog/bicep-deployment-solution)**
+> **[Bicep Deployment Solution on GitLab](https://gitlab.com/webflow-techblog/examples/bicep-virtualmachine-deployment)**
 
 ### Results
 
