@@ -31,6 +31,8 @@ This guide describes a centralized and scalable Bicep Deployment Solution design
 
 # Solution
 
+> **[Bicep Deployment Solution on GitLab](https://gitlab.com/webflow-techblog/bicep-deployment-solution)**
+
 The following image illustrates the layered architecture of the Bicep Deployment Solution:
 
 ![Bicep Deployment Solution](/assets/2025-06-08-bicep-deployment-solution/bicep-deployment-solution.png)
@@ -148,7 +150,7 @@ variables:
 
 A complete example project demonstrating the Bicep Deployment Solution, including pipeline configuration and sample infrastructure code, is available in the following repository:
 
-> **[Bicep Deployment Solution on GitLab](https://gitlab.com/webflow-techblog/examples/bicep-virtualmachine-deployment)**
+> **[Bicep Deployment Example](https://gitlab.com/webflow-techblog/examples/bicep-virtualmachine-deployment)**
 
 ### Results
 

@@ -18,8 +18,8 @@ hidden: true
     - [Benefits](#benefits)
 - [Pipeline Overview](#pipeline-overview)
 - [Prerequisites](#prerequisites)
-- [Terraform state files storage account deployment](#terraform-state-files-storage-account-deployment)
 - [How-To](#how-to)
+- [Terraform state files storage account deployment](#terraform-state-files-storage-account-deployment)
 - [Terraform Deployment](#terraform-deployment)
 - [Pipeline Variables](#pipeline-variables)
 - [Example](#example)
@@ -30,6 +30,8 @@ hidden: true
 This guide describes a centralized and scalable Terraform Deployment Solution designed for efficient infrastructure deployment using Terraform, Azure CLI, and GitLab pipelines. The solution is modular and reusable, following best practices for Infrastructure as Code (IaC).
 
 # Solution
+
+> **[Terraform Deployment Solution on GitLab](https://gitlab.com/webflow-techblog/terraform-deployment-solution)**
 
 The following image illustrates the layered architecture of the Terraform Deployment Solution:
 
@@ -54,7 +56,6 @@ Arrows labeled **`image`** indicate which Docker image the pipeline will use, wh
 - **Scalable & Integrated:** Manage multiple environments with seamless GitLab, Azure, and Bicep integration.
 - **Secure:** Built-in secrets and permissions management.
   
-
 # Pipeline Overview
 
 The image illustrates a high-level overview of the CI/CD pipeline stages and their roles in automating Bicep deployments to Azure.
@@ -73,15 +74,7 @@ Before you begin, ensure you have the following:
 - Docker installed on your local machine or CI environment
 - Basic knowledge of Terraform, Azure Resource Manager (ARM), and CI/CD concepts
 - Visual Studio Code
-- Storage Account for Terraform State files
-
-# Terraform state files storage account deployment
-
-**Note:** To use Terraform state files, you must have an Azure Storage Account available before running your first Terraform deployment. This creates a bootstrapping challenge, as Terraform itself needs the storage to manage state.
-
-You can solve this by provisioning the storage account manually or using an automated approach like Bicep. I recommend a solution like my [Bicep Deployment Solution](https://webflow.ch/bicep-deployment-solution) to quickly bootstrap the required storage account for Terraform state management.
-
-> **[Storage Account](https://gitlab.com/webflow-techblog/terraform-deployment-solution/bicep-storageaccount-deployment)**
+- [Storage Account for Terraform State files](#terraform-state-files-storage-account-deployment)
 
 # How-To
 
@@ -92,6 +85,15 @@ You can solve this by provisioning the storage account manually or using an auto
    2. Repository for the deployment solution.
    3. Repository for deploying your actual infrastructure to Azure.
    4. Repository for the storage acccount to save the terraform state files.
+
+# Terraform state files storage account deployment
+
+**Note:** To use Terraform state files, you must have an Azure Storage Account available before running your first Terraform deployment. This creates a bootstrapping challenge, as Terraform itself needs the storage to manage state.
+
+You can solve this by provisioning the storage account manually or using an automated approach like Bicep. I recommend a solution like my [Bicep Deployment Solution](https://webflow.ch/bicep-deployment-solution) to quickly bootstrap the required storage account for Terraform state management.
+
+> **[Storage Account](https://gitlab.com/webflow-techblog/terraform-deployment-solution/bicep-storageaccount-deployment)**
+
 
 Add the following GitLab CI/CD variables to your `terraform-deployment-solution` group in GitLab:
 
@@ -158,7 +160,7 @@ variables:
 
 A complete example project demonstrating the Terraform Deployment Solution, including pipeline configuration and sample infrastructure code, is available in the following repository:
 
-> **[Terraform Deployment Solution on GitLab](https://gitlab.com/webflow-techblog/examples/terraform-virtualmachine-deployment)**
+> **[Terraform Deployment Example](https://gitlab.com/webflow-techblog/examples/terraform-virtualmachine-deployment)**
 
 
 <!-- ### Results
